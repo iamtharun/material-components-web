@@ -51,4 +51,26 @@ describe('theme.test.scss', () => {
   border-color: green;
 }`);
      });
+
+  it('should replace values provided to $replace for theme.property()', () => {
+    const filePath = path.join(__dirname, 'replace.test.css');
+    const css = fs.readFileSync(filePath, 'utf8').trim();
+    expect(css).toEqual(`.simple {
+  width: calc(100% - 20px);
+}
+
+.var {
+  width: calc(2 * 16px);
+  /* @alternate */
+  width: calc(2 * var(--m-foo, 16px));
+}
+
+.naming {
+  width: calc(100vw / 2);
+}
+
+.multiple {
+  width: calc(8px + 8px + 8px);
+}`);
+  });
 });
